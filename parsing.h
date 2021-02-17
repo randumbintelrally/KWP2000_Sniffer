@@ -221,16 +221,19 @@ void SendMemoryByAddress() {
   counter++;
   Serial.println(":");
   
-  for (int t=7; t<(RXBuf[1] + 3); t++) {
+  for (int t=7; t<(RXBuf[1] + 2); t++) {
+    Serial.print("0x");
     Serial.print(RXBuf[t], HEX);
-    Serial.print(", ");
-    if(t == 0x17 || t==0x27 || t==0x37 || t==0x47 || t==0x57 || t==0x67 || t== 0x77) {
+    if(t != (RXBuf[1] + 1)) {
+       Serial.print(", ");
+    }
+    if(t == 0x16 || t==0x26 || t==0x36 || t==0x46 || t==0x56 || t==0x66 || t== 0x76) {
       Serial.println();
     }
   }
   Serial.println();
   Serial.print("Checksum = ");
-  Serial.println((RXBuf[1]+3), HEX);
+  Serial.println((RXBuf[(RXBuf[1]+2)]), HEX);
 }
 
 void ReadMemoryByAddress() {
