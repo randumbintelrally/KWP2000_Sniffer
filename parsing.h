@@ -193,6 +193,23 @@ void commandSwitch() {
         Serial.println("Subcommand Unknown");
       }
       break;
+    case 0xB7:
+      Serial.println("Logger Configuration Array");
+      if (RXBuf[0] != 0x01) { 
+        for (int t=2; t <(RXBuf[0] + 1); t++) {
+          Serial.print("0x");
+          Serial.print(RXBuf[t], HEX);
+          Serial.print(", ");
+          if(t == 0x13 || t==0x23 || t==0x33 || t==0x43 || t==0x53 || t==0x63 || t== 0x73) {
+            Serial.println();
+          }
+        }
+      }
+      Serial.println();
+      Serial.print("Checksum = ");
+      Serial.println(RXBuf[(RXBuf[0] + 1)], HEX);
+      break;
+        
     case 0xC3:
       Serial.println("Positive Response to Access Timing Parameters");
       Serial.print("Checksum = ");
@@ -242,10 +259,10 @@ void ReadMemoryByAddress() {
   if(RXBuf[2] == 0x63) {
       Serial.println("Positive Response to Read Memory By Address"); 
     }
-  
+    Serial.print("0x");
   for (int t=3; t<(RXBuf[1] + 2); t++) {
     Serial.print(RXBuf[t], HEX);
-    Serial.print(", ");
+    Serial.print(", 0x");
     if(t == 0x13 || t==0x23 || t==0x33 || t==0x43 || t==0x53 || t==0x63 || t== 0x73) {
       Serial.println();
     }
