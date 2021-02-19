@@ -236,16 +236,19 @@ void SendMemoryByAddress() {
   Serial.print("MemoryArray");
   Serial.print(counter);
   counter++;
-  //Serial.println(":");
+  Serial.println();
   
   for (int t=7; t<(RXBuf[1] + 2); t++) {
-    //Serial.print("0x");
-    //Serial.print(RXBuf[t], HEX);
+    Serial.print("0x");
+    Serial.print(RXBuf[t], HEX);
+    if (RXBuf[t] < 0x10) {
+      Serial.print("0");
+    }
     if(t != (RXBuf[1] + 1)) {
-       //Serial.print(", ");
+       Serial.print(", ");
     }
     if(t == 0x16 || t==0x26 || t==0x36 || t==0x46 || t==0x56 || t==0x66 || t== 0x76) {
-      //Serial.println();
+      Serial.println();
     }
   }
   //Serial.println();
